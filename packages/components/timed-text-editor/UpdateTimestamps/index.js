@@ -38,18 +38,23 @@ const createContentFromEntityList = (currentContent, newEntities) => {
     const blockEntites = newEntities.slice(totalWords, totalWords + wordsInBlock);
     let speaker = block.data.speaker;
 
+    console.log("HELLO WORLD");
+    console.log('speaker', speaker, block);
+
     if (!speaker) {
-      console.log('speaker', speaker, block);
+      //console.log('speaker', speaker, block);
       speaker = 'U_UKN';
+    } else {
+      speaker = null;
     }
+
     const updatedBlock = {
       text: blockEntites.map((entry) => entry.punct).join(' '),
       type: 'paragraph',
       data: {
         speaker: speaker,
         words: blockEntites,
-        start: blockEntites[0].start
-      },
+        start: (blockEntites.length) ? blockEntites[0].start : 0 },
       entityRanges: generateEntitiesRanges(blockEntites, 'punct'),
     };
 
